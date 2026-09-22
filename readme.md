@@ -1,267 +1,492 @@
 # Brand Price Lists AJAX
 
-افزونه‌ای عمومی برای WordPress و WooCommerce جهت نمایش **لیست قیمت محصولات بر اساس برند** با بارگذاری مرحله‌ای و AJAX. این افزونه به هیچ فروشگاه، دامنه، برند یا کسب‌وکار خاصی وابسته نیست و می‌تواند در هر سایت WooCommerce که taxonomy برند مناسب داشته باشد استفاده شود.
+# این توضیحات توسط AI (هوش مصنوعی) نوشته شده است
+
+**Brand Price Lists AJAX** یک افزونه توسعه‌پذیر برای **WordPress** و **WooCommerce** است که برای نمایش و مدیریت لیست قیمت محصولات بر اساس برند طراحی شده است.
+
+این پروژه با تمرکز بر **Performance، AJAX، Lazy Loading، انعطاف‌پذیری و یکپارچگی با Elementor** توسعه داده شده و برای فروشگاه‌هایی مناسب است که تعداد زیادی محصول و برند دارند و نمی‌خواهند تمام اطلاعات محصولات را در اولین درخواست صفحه بارگذاری کنند.
+
+افزونه کاملاً عمومی است و به هیچ فروشگاه، دامنه، برند یا کسب‌وکار خاصی وابسته نیست.
 
 ---
 
-## معرفی
+## فهرست مطالب
 
-**Brand Price Lists AJAX** برای سایت‌هایی طراحی شده است که تعداد زیادی محصول و برند دارند و می‌خواهند لیست قیمت را بدون بارگذاری هم‌زمان تمام محصولات نمایش دهند.
-
-در حالت عادی، ابتدا اطلاعات برندها نمایش داده می‌شود و محصولات هر برند در زمان موردنیاز از طریق AJAX دریافت می‌شوند. با نزدیک‌شدن هر بخش به محدوده دید کاربر، بارگذاری آن بخش می‌تواند به‌صورت Lazy انجام شود.
-
-این افزونه دو روش اصلی استفاده دارد:
-
-1. **Shortcode** با استفاده از `[price_list]`
-2. **Elementor Widget** با نام `Brand Price List`
+* [درباره پروژه](#درباره-پروژه)
+* [اهداف پروژه](#اهداف-پروژه)
+* [قابلیت‌ها](#قابلیت‌ها)
+* [پیش‌نیازها](#پیشنیازها)
+* [نصب](#نصب)
+* [شروع کار](#شروع-کار)
+* [استفاده از Shortcode](#استفاده-از-shortcode)
+* [استفاده با Elementor](#استفاده-با-elementor)
+* [Taxonomy برند](#taxonomy-برند)
+* [AJAX و Lazy Loading](#ajax-و-lazy-loading)
+* [ساختار پروژه](#ساختار-پروژه)
+* [معماری افزونه](#معماری-افزونه)
+* [امنیت](#امنیت)
+* [Performance و Cache](#performance-و-cache)
+* [Responsive و Styling](#responsive-و-styling)
+* [عیب‌یابی](#عیبیابی)
+* [راهنمای توسعه](#راهنمای-توسعه)
+* [Roadmap](#roadmap)
+* [Changelog](#changelog)
+* [مشارکت در پروژه](#مشارکت-در-پروژه)
+* [License](#license)
 
 ---
 
-## ویژگی‌ها
+# درباره پروژه
 
-- نمایش برندهای موجود در WooCommerce
-- دریافت محصولات هر برند به‌صورت AJAX
-- Lazy Load برای بخش‌های برند
-- بارگذاری مرحله‌ای محصولات
-- دکمه «بارگذاری محصولات بیشتر»
-- عدم نیاز به بارگذاری تمام محصولات در اولین درخواست صفحه
-- پشتیبانی از نمایش همه برندها
-- پشتیبانی از نمایش یک برند مشخص
-- پشتیبانی از انتخاب چند برند در Elementor
-- پشتیبانی از چند Widget در یک صفحه
-- پشتیبانی از لوگوی برند در صورت وجود
-- نمایش تعداد محصولات هر برند
-- مرتب‌سازی برندها بر اساس نام یا تعداد محصولات
-- مرتب‌سازی محصولات بر اساس نام، تاریخ، ترتیب منو یا قیمت
-- فیلتر محصولات بر اساس جستجو، موجودی، تخفیف، Featured و دسته‌بندی
-- انتخاب ستون‌های جدول محصولات
-- تغییر عنوان ستون‌ها
-- Layoutهای مختلف برای نمایش لیست قیمت
-- Layoutهای `Zigzag`، `Stacked`، `Compact` و `Table`
-- امکان تغییر نسبت عرض بخش برند و محصولات
-- کنترل فاصله و گردی کارت‌ها
-- تنظیم رنگ و پس‌زمینه بخش برند و محصولات
-- تنظیم Typography از طریق Elementor
-- تنظیمات Responsive برای Desktop، Tablet و Mobile
-- تنظیم Hover برای ردیف محصولات و دکمه‌ها
-- Lazy Load تصاویر محصولات و لوگوهای برند
-- Cache اطلاعات برندها
-- استفاده از WordPress AJAX
-- استفاده از WordPress nonce برای درخواست‌های AJAX
-- سازگار با WooCommerce
-- سازگار با Elementor Widget API
-- عدم تحمیل فونت اختصاصی به سایت
+در بسیاری از فروشگاه‌های WooCommerce، محصولات بر اساس برند دسته‌بندی می‌شوند و کاربران نیاز دارند قیمت محصولات هر برند را در قالب یک **Price List** مشاهده کنند.
+
+روش ساده برای پیاده‌سازی چنین قابلیتی این است که تمام برندها و تمام محصولات آن‌ها در زمان بارگذاری صفحه Query شوند. این روش در فروشگاه‌های کوچک ممکن است قابل قبول باشد، اما با افزایش تعداد محصولات می‌تواند باعث افزایش:
+
+* زمان پاسخ سرور
+* حجم HTML
+* تعداد Queryهای دیتابیس
+* مصرف حافظه PHP
+* حجم JavaScript و DOM
+* زمان Rendering صفحه
+
+شود.
+
+**Brand Price Lists AJAX** با هدف حل همین مسئله ایجاد شده است.
+
+به جای اینکه تمام محصولات در درخواست اولیه صفحه دریافت شوند، ساختار اصلی لیست قیمت ایجاد شده و اطلاعات محصولات در مراحل بعدی و در صورت نیاز از طریق AJAX دریافت می‌شوند.
+
+---
+
+# اهداف پروژه
+
+اهداف اصلی پروژه عبارت‌اند از:
+
+### 1. کاهش هزینه Query اولیه
+
+فقط اطلاعات موردنیاز در درخواست اولیه دریافت شود و محصولات در مراحل بعدی بارگذاری شوند.
+
+### 2. استفاده از AJAX برای داده‌های حجیم
+
+محصولات هر برند می‌توانند به‌صورت مستقل و مرحله‌ای دریافت شوند.
+
+### 3. پشتیبانی از فروشگاه‌های بزرگ
+
+معماری افزونه باید بتواند در سایت‌هایی با تعداد زیاد محصول و برند نیز قابل استفاده باشد.
+
+### 4. یکپارچگی با Elementor
+
+کاربر بدون نیاز به نوشتن کد می‌تواند Widget را از طریق Elementor پیکربندی کند.
+
+### 5. انعطاف‌پذیری در نمایش
+
+افزونه نباید به یک Layout یا ساختار HTML خاص محدود باشد.
+
+### 6. جداسازی منطق داده از Presentation
+
+Query محصولات، AJAX، تنظیمات، Widget و Render تا حد امکان به شکل مستقل سازمان‌دهی شده‌اند.
+
+### 7. مستقل بودن از یک سایت خاص
+
+افزونه به هیچ دامنه، فروشگاه یا برند خاصی وابسته نیست و می‌تواند به‌عنوان یک پروژه مستقل توسعه داده شود.
+
+---
+
+# قابلیت‌ها
+
+## مدیریت برند
+
+* نمایش برندهای دارای محصول
+* نمایش نام برند
+* نمایش لوگوی برند در صورت وجود
+* نمایش تعداد محصولات هر برند
+* مرتب‌سازی برندها بر اساس نام
+* مرتب‌سازی برندها بر اساس تعداد محصولات
+* انتخاب همه برندها
+* انتخاب یک برند
+* انتخاب چند برند
+
+## محصولات
+
+* بارگذاری مرحله‌ای محصولات
+* AJAX Loading
+* Lazy Loading
+* دکمه Load More
+* فیلتر بر اساس موجودی
+* فیلتر محصولات تخفیف‌دار
+* فیلتر Featured
+* فیلتر دسته‌بندی
+* جستجوی محصولات
+* مرتب‌سازی بر اساس:
+
+  * نام
+  * تاریخ
+  * Menu Order
+  * قیمت
+
+## Layout
+
+چند Layout برای نمایش Price List در نظر گرفته شده است:
+
+* `Table`
+* `Compact`
+* `Stacked`
+* `Zigzag`
+
+ساختار Layout به شکلی طراحی شده که در آینده بتوان Presetهای جدیدی به آن اضافه کرد.
+
+## Elementor
+
+Widget اختصاصی:
+
+```text
+Brand Price List
+```
+
+با قابلیت:
+
+* انتخاب برند
+* انتخاب چند برند
+* تنظیم ستون‌ها
+* تغییر عنوان ستون‌ها
+* Drag & Drop ستون‌ها
+* کنترل Layout
+* کنترل Width
+* کنترل Spacing
+* Typography
+* رنگ‌ها
+* Border Radius
+* Hover
+* Responsive Controls
+
+## Performance
+
+* AJAX
+* Lazy Loading
+* Query بهینه محصولات
+* استفاده از `fields => ids` در Queryهای موردنیاز
+* استفاده از `no_found_rows`
+* Cache اطلاعات برندها
+* جلوگیری از Query تمام محصولات در درخواست اولیه
+
+---
+
+# پیش‌نیازها
+
+برای استفاده از نسخه فعلی پروژه، محیط زیر موردنیاز است:
+
+| Component   | Requirement                   |
+| ----------- | ----------------------------- |
+| WordPress   | 7.0+                          |
+| PHP         | 8.2+                          |
+| WooCommerce | Required                      |
+| Elementor   | Required for Elementor Widget |
+| Browser     | JavaScript Enabled            |
+
+> نسخه WordPress و PHP باید با نسخه WooCommerce و سایر افزونه‌های سایت نیز سازگار باشد.
+
+### وابستگی‌های اصلی
+
+افزونه برای عملکرد اصلی خود به:
+
+```text
+WordPress
+WooCommerce
+```
+
+وابسته است.
+
+برای استفاده از Widget:
+
+```text
+Elementor
+```
+
+نیز باید فعال باشد.
+
+**Elementor برای استفاده از Shortcode الزامی نیست.**
 
 ---
 
 # نصب
 
-1. فایل ZIP افزونه را از بخش افزونه‌های WordPress نصب کنید.
-2. افزونه را فعال کنید.
-3. مطمئن شوید WooCommerce فعال است.
-4. در صورت استفاده از Elementor، Elementor نیز باید فعال باشد.
-5. پس از فعال‌سازی می‌توانید از shortcode یا Elementor Widget استفاده کنید.
+## روش اول — نصب ZIP
 
-### پس از بروزرسانی
+1. فایل ZIP افزونه را دریافت کنید.
+2. وارد پنل WordPress شوید.
+3. به مسیر زیر بروید:
 
-اگر Widget در Elementor نمایش داده نشد:
+```text
+Plugins → Add New Plugin → Upload Plugin
+```
 
-1. افزونه را یک‌بار غیرفعال و فعال کنید.
-2. از Elementor بخش **Tools**، گزینه **Regenerate CSS & Data** را اجرا کنید.
-3. صفحه Elementor را Hard Refresh کنید.
-4. در پنل Widgets عبارت `Brand Price List` را جستجو کنید.
+4. فایل ZIP را انتخاب کنید.
+5. روی **Install Now** کلیک کنید.
+6. افزونه را فعال کنید.
+
+پس از فعال‌سازی، در صورت فعال بودن Elementor، Widget نیز در Elementor ثبت می‌شود.
 
 ---
 
-# Shortcode
+## روش دوم — نصب از Git
 
-## استفاده پایه
+برای توسعه‌دهندگان می‌توان Repository را مستقیماً در محیط توسعه Clone کرد:
 
-برای نمایش لیست قیمت از shortcode زیر استفاده کنید:
+```bash
+git clone https://github.com/hessamzm/brand-price-lists-ajax.git
+```
+
+سپس پوشه پروژه را در مسیر:
+
+```text
+wp-content/plugins/
+```
+
+قرار دهید.
+
+ساختار باید به شکل زیر باشد:
+
+```text
+wp-content/
+└── plugins/
+    └── brand-price-lists-ajax/
+```
+
+سپس افزونه را از پنل WordPress فعال کنید.
+
+---
+
+# شروع کار
+
+بعد از نصب، سریع‌ترین روش برای بررسی عملکرد افزونه استفاده از Shortcode است.
+
+در یک Page یا Post قرار دهید:
 
 ```text
 [price_list]
 ```
 
-این shortcode از تنظیمات عمومی افزونه استفاده می‌کند و برندهای موجود را نمایش می‌دهد.
+صفحه را ذخیره و مشاهده کنید.
 
-## نمایش یک برند مشخص
+اگر taxonomy برند سایت روی مقدار پیش‌فرض باشد و برندهای دارای محصول وجود داشته باشند، Price List باید نمایش داده شود.
 
-می‌توان slug برند را با ویژگی `brand` مشخص کرد:
+---
+
+# اولین استفاده با یک برند
+
+برای تست یک برند مشخص:
+
+```text
+[price_list brand="brand-slug"]
+```
+
+مثال:
 
 ```text
 [price_list brand="hikvision"]
 ```
 
-در این حالت فقط محصولات برند موردنظر نمایش داده می‌شوند.
+در این مثال:
 
-> مقدار `brand` باید با slug واقعی term در taxonomy برند سایت مطابقت داشته باشد.
+```text
+hikvision
+```
+
+باید **slug واقعی Term برند** باشد.
+
+نام نمایشی برند و slug الزاماً یکسان نیستند.
+
+---
+
+# استفاده با Elementor
+
+اگر Elementor فعال باشد، Widget زیر در Elementor قابل استفاده خواهد بود:
+
+```text
+Brand Price List
+```
+
+برای شروع:
+
+1. یک Page را با Elementor باز کنید.
+2. پنل Widgets را باز کنید.
+3. عبارت زیر را جستجو کنید:
+
+```text
+Brand Price List
+```
+
+4. Widget را به صفحه اضافه کنید.
+5. برند یا برندهای موردنظر را انتخاب کنید.
+6. Layout را انتخاب کنید.
+7. ستون‌های Price List را تنظیم کنید.
+8. Style و Responsive را پیکربندی کنید.
+9. صفحه را Publish کنید.
+
+Widget در دسته:
+
+```text
+Brand Price Lists
+```
+
+قرار می‌گیرد و برای دسترسی آسان در دسته عمومی Elementor نیز قابل مشاهده است.
+
+---
+
+# تنظیمات Widget
+
+## Brand Selection
+
+Widget سه حالت اصلی دارد:
+
+```text
+All Brands
+Single Brand
+Multiple Brands
+```
+
+### All Brands
+
+تمام برندهای واجد شرایط نمایش داده می‌شوند.
+
+### Single Brand
+
+فقط یک برند مشخص نمایش داده می‌شود.
+
+### Multiple Brands
+
+چند برند به‌صورت هم‌زمان انتخاب می‌شوند.
+
+---
+
+# Product Filters
+
+محصولات را می‌توان با معیارهای مختلف فیلتر کرد:
+
+```text
+Search
+Stock Status
+On Sale
+Featured
+Category
+```
+
+همچنین ترتیب نمایش قابل تنظیم است:
+
+```text
+Name
+Date
+Menu Order
+Price
+```
+
+---
+
+# Product Columns
+
+ستون‌های Price List از طریق Elementor قابل مدیریت هستند.
+
+امکانات:
+
+* فعال/غیرفعال کردن ستون
+* تغییر عنوان ستون
+* تغییر ترتیب ستون‌ها
+* Drag & Drop
+
+این ساختار امکان ایجاد Price Listهای مختلف بدون تغییر کد را فراهم می‌کند.
+
+---
+
+# Layoutها
+
+## Table
+
+نمایش کلاسیک محصولات در قالب جدول.
+
+مناسب برای:
+
+* Price Listهای رسمی
+* لیست‌های طولانی
+* نمایش تعداد زیاد محصول
+
+## Compact
+
+نمایش فشرده برای کاهش فضای عمودی.
+
+## Stacked
+
+نمایش برند و محصولات به شکل عمودی.
+
+## Zigzag
+
+نمایش بخش برند و محصولات در ردیف‌های متوالی با امکان تغییر جهت نمایش.
 
 ---
 
 # Taxonomy برند
 
-افزونه به taxonomy خاص یک فروشگاه وابسته نیست.
+افزونه به یک سیستم برند خاص وابسته نیست.
 
-در تنظیمات افزونه می‌توان taxonomy برند را انتخاب کرد. مقدار پیش‌فرض در نسخه فعلی:
+Taxonomy پیش‌فرض:
 
 ```text
 product_brand
 ```
-
-اما اگر سایت از افزونه یا سیستم دیگری برای برندها استفاده کند، taxonomy مربوطه قابل انتخاب است.
-
-برای مثال ممکن است taxonomy سایت یکی از موارد زیر باشد:
-
-```text
-product_brand
-brand
-pwb-brand
-```
-
-مقدار واقعی باید بر اساس ساختار همان سایت انتخاب شود.
-
----
-
-# Elementor
-
-در صورت فعال بودن Elementor، ویجت زیر در پنل Elementor ثبت می‌شود:
-
-**Brand Price List**
-
-ویجت در دسته:
-
-**Brand Price Lists**
-
-قرار می‌گیرد و برای دسترسی آسان در دسته **General** نیز قابل استفاده است.
-
-## قابلیت‌های Widget
-
-### انتخاب برند
-
-Widget از سه حالت پشتیبانی می‌کند:
-
-- **همه برندها**
-- **یک برند**
-- **چند برند**
-
-### تنظیمات نمایش برند
-
-- نمایش یا مخفی‌کردن نام برند
-- نمایش یا مخفی‌کردن لوگوی برند
-- ترتیب برندها بر اساس نام
-- ترتیب برندها بر اساس تعداد محصولات
-- تعیین عرض بخش برند
-- تعیین عرض بخش محصولات
-- تنظیم فاصله بین کارت‌ها
-- تنظیم گردی کارت‌ها
-
-### تنظیمات محصولات
-
-امکان فیلتر محصولات بر اساس موارد زیر وجود دارد:
-
-- جستجو
-- موجودی
-- تخفیف
-- Featured
-- دسته‌بندی محصول
-
-همچنین می‌توان ترتیب محصولات را بر اساس موارد زیر تنظیم کرد:
-
-- نام
-- تاریخ
-- Menu Order
-- قیمت
-
-### ستون‌های جدول
-
-ستون‌های محصول از طریق Elementor قابل تنظیم هستند و می‌توان:
-
-- ستون را فعال یا غیرفعال کرد.
-- عنوان ستون را تغییر داد.
-- ترتیب ستون‌ها را با Drag & Drop تغییر داد.
-
-### Layout
-
-Widget دارای چند حالت نمایش است:
-
-- `Zigzag`
-- `Stacked`
-- `Compact`
-- `Table`
-
-در حالت Zigzag، جای بخش برند و محصولات در ردیف‌های متوالی می‌تواند تغییر کند.
-
-### AJAX
-
-تعداد محصولات بارگذاری‌شده در هر درخواست AJAX از داخل Elementor قابل تنظیم است. پس از بارگذاری اولین مجموعه، در صورت وجود محصولات بیشتر، دکمه بارگذاری ادامه محصولات نمایش داده می‌شود.
-
----
-
-# تنظیمات ظاهری Elementor
-
-برای بخش برند می‌توان موارد زیر را کنترل کرد:
-
-- رنگ پس‌زمینه
-- رنگ متن
-- Typography
-- Padding
-- اندازه لوگو
-- فاصله‌ها
-
-برای بخش محصولات نیز امکان تنظیم موارد زیر وجود دارد:
-
-- رنگ پس‌زمینه
-- رنگ متن
-- رنگ خطوط جدول
-- Typography
-- رنگ Hover ردیف‌ها
-
-برای قیمت و دکمه‌ها نیز کنترل‌های اختصاصی وجود دارد.
-
----
-
-# Responsive
-
-Widget با تنظیمات Responsive Elementor سازگار است.
-
-تنظیمات قابل کنترل برای دستگاه‌های مختلف شامل مواردی مانند:
-
-- Desktop
-- Tablet
-- Mobile
 
 است.
 
-در اندازه‌های کوچک‌تر نیز جدول محصولات به‌صورت افقی قابل اسکرول است تا ساختار ستون‌ها خراب نشود.
+با این حال، سایت می‌تواند از taxonomy دیگری استفاده کند؛ برای مثال:
+
+```text
+brand
+pwb-brand
+product_brand
+```
+
+Taxonomy مورد استفاده باید واقعاً در WordPress ثبت شده باشد و محصولات به Termهای آن متصل باشند.
 
 ---
 
-# Lazy Loading و AJAX
+# AJAX و Lazy Loading
 
-فرآیند بارگذاری به این شکل انجام می‌شود:
+یکی از بخش‌های اصلی معماری افزونه، بارگذاری مرحله‌ای محصولات است.
 
-1. ساختار اصلی لیست قیمت در صفحه قرار می‌گیرد.
-2. اطلاعات برندها نمایش داده می‌شود.
-3. محصولات هر برند در زمان موردنیاز از طریق AJAX دریافت می‌شوند.
-4. در صورت وجود محصولات بیشتر، کاربر می‌تواند آن‌ها را بارگذاری کند.
-5. تصاویر محصولات و لوگوها نیز می‌توانند به‌صورت Lazy Load دریافت شوند.
+فرآیند کلی:
 
-این ساختار باعث می‌شود صفحه مجبور نباشد تمام محصولات تمام برندها را در اولین درخواست دریافت کند.
+```text
+Page Request
+     │
+     ▼
+Render Price List Structure
+     │
+     ▼
+Load Brand Information
+     │
+     ▼
+AJAX Request
+     │
+     ▼
+Load Product Batch
+     │
+     ▼
+Render Products
+     │
+     ▼
+Load More / Next Batch
+```
+
+در نتیجه، تمام محصولات مجبور نیستند در اولین درخواست صفحه دریافت شوند.
 
 ---
 
-# AJAX Endpoint
+# AJAX Action
 
-Endpoint اصلی افزونه:
+Action اصلی افزونه:
 
 ```text
 price_list_load_products
 ```
 
-این action برای کاربران واردشده و کاربران مهمان ثبت شده است.
-
-پارامترهای اصلی درخواست شامل موارد زیر هستند:
+درخواست شامل پارامترهایی مانند موارد زیر است:
 
 ```text
 nonce
@@ -272,324 +497,552 @@ limit
 columns
 ```
 
-در Query محصولات از روش‌هایی مانند `fields => ids` و `no_found_rows` برای کاهش سربار Query استفاده می‌شود.
+AJAX برای کاربران واردشده و کاربران مهمان ثبت شده است.
+
+---
+
+# Performance
+
+هدف اصلی Performance در این پروژه کاهش هزینه درخواست اولیه است.
+
+در Query محصولات، بسته به شرایط، از تکنیک‌هایی مانند:
+
+```php
+'fields' => 'ids'
+```
+
+و:
+
+```php
+'no_found_rows' => true
+```
+
+استفاده می‌شود.
+
+همچنین اطلاعات برندها می‌توانند Cache شوند.
+
+با این حال، Performance نهایی به عوامل محیطی نیز وابسته است، از جمله:
+
+* تعداد محصولات
+* تعداد Termها
+* نوع taxonomy
+* وضعیت دیتابیس
+* Object Cache
+* Page Cache
+* Hosting
+* PHP Version
+* سایر افزونه‌ها
 
 ---
 
 # امنیت
 
-برای جلوگیری از درخواست‌های نامعتبر، افزونه از مکانیزم‌های استاندارد WordPress استفاده می‌کند، از جمله:
+افزونه برای درخواست‌های AJAX و ورودی‌های کاربر از مکانیزم‌های استاندارد WordPress استفاده می‌کند.
 
-- WordPress nonce
-- `sanitize_key()`
-- `sanitize_title()`
-- `absint()`
-- اعتبارسنجی taxonomy و term
-- محدودسازی مقادیر ورودی
-- Escape کردن خروجی‌های متنی
-- Escape کردن URLها
+از جمله:
 
-> این موارد برای کاهش ریسک ورودی‌های نامعتبر در shortcode، Elementor و AJAX در نظر گرفته شده‌اند.
+* WordPress Nonce
+* `sanitize_key()`
+* `sanitize_title()`
+* `absint()`
+* اعتبارسنجی taxonomy
+* اعتبارسنجی term
+* محدودسازی ورودی‌ها
+* Escape خروجی
+* Escape URL
 
----
-
-# عملکرد و Cache
-
-اطلاعات برندها می‌توانند Cache شوند تا در هر بار نمایش صفحه Query تکراری برای دریافت فهرست برندها انجام نشود.
-
-Cache در زمان تغییر تنظیمات مرتبط با افزونه پاک می‌شود.
-
-با توجه به اینکه محصولات هر برند به‌صورت مرحله‌ای دریافت می‌شوند، حجم Query اولیه صفحه نیز کاهش پیدا می‌کند.
+هدف این لایه‌ها جلوگیری از پردازش ورودی‌های نامعتبر و کاهش ریسک‌های رایج در پردازش داده‌های WordPress است.
 
 ---
 
-# فونت
+# Responsive و Styling
 
-افزونه فونت اختصاصی بارگذاری یا تحمیل نمی‌کند.
+Widget با سیستم Responsive Elementor سازگار است.
 
-به‌صورت پیش‌فرض:
+تنظیمات قابل کنترل برای:
+
+```text
+Desktop
+Tablet
+Mobile
+```
+
+در دسترس هستند.
+
+همچنین می‌توان موارد زیر را شخصی‌سازی کرد:
+
+* Typography
+* Background
+* Text Color
+* Border
+* Border Radius
+* Spacing
+* Padding
+* Product Row Hover
+* Button Styles
+* Brand Logo Size
+
+افزونه فونت اختصاصی تحمیل نمی‌کند و به‌صورت پیش‌فرض از فونت محیط سایت استفاده می‌کند:
 
 ```css
 font-family: inherit;
 ```
 
-استفاده می‌شود.
-
-بنابراین فونت از قالب یا Elementor به ارث می‌رسد. در Elementor نیز کنترل‌های Typography می‌توانند فونت، اندازه، وزن، فاصله خطوط و سایر ویژگی‌های تایپوگرافی را override کنند.
-
 ---
 
-# سازگاری
+# ساختار پروژه
 
-این افزونه برای استفاده در محیط زیر طراحی شده است:
-
-- WordPress
-- WooCommerce
-- Elementor
-
-برای استفاده از shortcode، Elementor الزامی نیست؛ اما برای استفاده از Widget، Elementor باید فعال باشد.
-
-## پیش‌نیازهای نسخه فعلی
-
-بر اساس Header فعلی افزونه:
-
-```text
-Requires at least: WordPress 7.0
-Requires PHP: 8.2
-Requires Plugins: Elementor, WooCommerce
-```
-
-در صورتی که نسخه WordPress یا WooCommerce سایت پایین‌تر از نیازمندی‌های واقعی کد باشد، قبل از نصب در محیط Production تست سازگاری انجام شود.
-
----
-
-# ساختار افزونه
-
-ساختار اصلی افزونه به شکل زیر است:
+ساختار فعلی پروژه:
 
 ```text
 brand-price-lists-ajax/
+│
 ├── brand-price-lists-ajax.php
 ├── includes/
 │   └── class-elementor-widget.php
+│
 └── readme.md
 ```
 
-### فایل اصلی افزونه
+## `brand-price-lists-ajax.php`
+
+هسته اصلی افزونه است و مسئول بخش‌هایی مانند:
+
+* Plugin Bootstrap
+* Shortcode
+* AJAX
+* Product Query
+* Brand Query
+* Render
+* Cache
+* Front-end Assets
+* Elementor Integration
+
+است.
+
+## `includes/class-elementor-widget.php`
+
+Integration مربوط به Elementor در این فایل قرار دارد.
+
+مسئولیت‌های آن شامل:
+
+* تعریف Widget
+* Elementor Controls
+* Style Controls
+* Responsive Controls
+* ثبت Widget
+* ثبت Category
+
+است.
+
+---
+
+# معماری افزونه
+
+ثبت Integration مربوط به Elementor پس از initialization شدن Elementor انجام می‌شود.
+
+ابتدا Integration در:
+
+```text
+elementor/init
+```
+
+بارگذاری می‌شود.
+
+سپس Widget از طریق API رسمی Elementor در:
+
+```text
+elementor/widgets/register
+```
+
+ثبت می‌شود.
+
+دسته اختصاصی نیز از طریق:
+
+```text
+elementor/elements/categories_registered
+```
+
+ثبت می‌شود.
+
+این معماری از وابستگی به ترتیب Load تصادفی فایل‌ها جلوگیری می‌کند و باعث می‌شود Widget در زمان مناسب در Widgets Manager Elementor ثبت شود.
+
+---
+
+# توسعه پروژه
+
+اگر قصد توسعه این پروژه را دارید، پیشنهاد می‌شود ابتدا ساختار فعلی افزونه را بررسی کنید.
+
+ترتیب پیشنهادی:
+
+### مرحله 1 — Plugin Bootstrap
+
+فایل:
 
 ```text
 brand-price-lists-ajax.php
 ```
 
-مسئول مواردی مانند:
+را بررسی کنید.
 
-- ثبت shortcode
-- ثبت AJAX
-- تنظیمات افزونه
-- دریافت برندها
-- Query محصولات
-- Render خروجی
-- CSS و JavaScript اصلی
-- مدیریت Cache
-- بارگذاری Integration مربوط به Elementor
+این فایل نقطه ورود افزونه است.
 
-### فایل Elementor
+### مرحله 2 — Data Layer
+
+منطق مربوط به:
+
+```text
+Brands
+Products
+Taxonomy
+Filters
+Query
+Cache
+```
+
+را بررسی کنید.
+
+### مرحله 3 — Rendering
+
+نحوه تبدیل داده‌ها به خروجی HTML را بررسی کنید.
+
+### مرحله 4 — AJAX
+
+Action زیر را بررسی کنید:
+
+```text
+price_list_load_products
+```
+
+### مرحله 5 — Elementor
+
+در نهایت فایل:
 
 ```text
 includes/class-elementor-widget.php
 ```
 
-مسئول:
+را بررسی کنید.
 
-- تعریف Widget
-- تعریف Controls
-- تنظیمات Style
-- Responsive Controls
-- ثبت Widget در Elementor
-- ثبت دسته اختصاصی Elementor
+این فایل لایه Integration با Elementor است.
 
 ---
 
-# معماری ثبت Elementor
+# توسعه Layout جدید
 
-Integration مربوط به Elementor از فایل اصلی افزونه در Hook زیر بارگذاری می‌شود:
-
-```text
- elementor/init
-```
-
-سپس Widget با API فعلی Elementor و Hook زیر ثبت می‌شود:
-
-```text
- elementor/widgets/register
-```
-
-و در نهایت Widget از طریق Widgets Manager ثبت می‌شود.
-
-دسته اختصاصی نیز از Hook زیر ثبت می‌شود:
-
-```text
- elementor/elements/categories_registered
-```
-
-این ساختار باعث می‌شود فایل Widget قبل از ساخته‌شدن لیست Widgetهای Elementor بارگذاری شده باشد و مشکل نمایش‌ندادن Widget به دلیل ترتیب Load افزونه‌ها ایجاد نشود.
-
----
-
-# استفاده در چند بخش یک صفحه
-
-می‌توان در یک صفحه چند نمونه از Widget را قرار داد.
+برای اضافه کردن Layout جدید، پیشنهاد می‌شود Layout به‌عنوان یک Presentation Layer مستقل در نظر گرفته شود.
 
 برای مثال:
 
-- Widget اول: برند A
-- Widget دوم: برند B
-- Widget سوم: برند C
+```text
+Table
+Compact
+Stacked
+Zigzag
+```
 
-هر Widget تنظیمات مستقل خود را دارد و می‌تواند Layout، ستون‌ها، فیلترها و ظاهر متفاوتی داشته باشد.
+Layout جدید نباید منطق Query محصولات را دوباره پیاده‌سازی کند.
+
+بهتر است:
+
+```text
+Data
+  ↓
+Query
+  ↓
+Normalized Product Data
+  ↓
+Layout Renderer
+```
+
+استفاده شود.
+
+این تفکیک باعث می‌شود اضافه کردن Layout جدید بدون ایجاد Queryهای تکراری امکان‌پذیر باشد.
 
 ---
 
-# نکات مهم
+# توسعه Elementor Controls
 
-### 1. slug برند
+Controlهای جدید باید تا حد امکان:
 
-اگر یک برند در shortcode انتخاب می‌شود، باید slug صحیح آن استفاده شود، نه لزوماً نام نمایشی برند.
-
-### 2. taxonomy
-
-اگر لیست برندها خالی است، ابتدا taxonomy برند سایت را بررسی کنید.
-
-### 3. Elementor
-
-اگر Widget در Elementor دیده نمی‌شود، Elementor و افزونه را فعال کنید، سپس CSS & Data را regenerate کنید و Editor را Refresh کنید.
-
-### 4. Cache
-
-در صورت تغییر برندها یا taxonomy، اگر نتیجه قدیمی نمایش داده شد، Cache سایت و Cache افزونه‌های بهینه‌سازی را پاک کنید.
-
-### 5. تعداد زیاد محصولات
-
-برای سایت‌هایی با تعداد محصول بسیار زیاد، استفاده از AJAX و Lazy Loading توصیه می‌شود تا تمام محصولات در درخواست اولیه صفحه Query نشوند.
+* قابل Responsive باشند.
+* با ساختار Elementor هماهنگ باشند.
+* مقدار پیش‌فرض مشخص داشته باشند.
+* روی Front-end و Editor رفتار یکسانی داشته باشند.
 
 ---
 
 # عیب‌یابی
 
-## Widget در Elementor دیده نمی‌شود
+## Widget در Elementor نمایش داده نمی‌شود
 
-مراحل زیر را انجام دهید:
+موارد زیر را بررسی کنید:
 
 1. Elementor فعال باشد.
-2. افزونه Brand Price Lists AJAX فعال باشد.
+2. افزونه فعال باشد.
 3. WooCommerce فعال باشد.
-4. Elementor → Tools → Regenerate CSS & Data را اجرا کنید.
-5. صفحه Elementor را Refresh یا Hard Refresh کنید.
-6. در پنل Widget عبارت زیر را جستجو کنید:
+4. Elementor را به‌روز کنید.
+5. از مسیر زیر استفاده کنید:
+
+```text
+Elementor → Tools → Regenerate CSS & Data
+```
+
+6. Editor را Refresh کنید.
+7. عبارت زیر را جستجو کنید:
 
 ```text
 Brand Price List
 ```
 
-7. دسته `Brand Price Lists` را بررسی کنید.
-
 ---
 
 ## برندها نمایش داده نمی‌شوند
 
-موارد زیر را بررسی کنید:
+بررسی کنید:
 
-- taxonomy برند درست انتخاب شده باشد.
-- taxonomy موردنظر واقعاً در سایت ثبت شده باشد.
-- برندها Term داشته باشند.
-- برندهای موردنظر محصول مرتبط داشته باشند.
-- Cache سایت پاک شده باشد.
+* taxonomy صحیح انتخاب شده باشد.
+* taxonomy در WordPress ثبت شده باشد.
+* Termهای برند وجود داشته باشند.
+* محصولات به برندها متصل باشند.
+* Cache قدیمی وجود نداشته باشد.
 
 ---
 
-## محصولات یک برند نمایش داده نمی‌شوند
+## محصولات نمایش داده نمی‌شوند
 
-بررسی کنید:
+موارد زیر را بررسی کنید:
 
-- slug برند صحیح باشد.
-- taxonomy صحیح باشد.
-- محصول واقعاً به آن برند متصل باشد.
-- محصول در وضعیت قابل نمایش WooCommerce باشد.
-- فیلترهای Elementor باعث حذف محصول نشده باشند.
+* slug برند
+* taxonomy
+* ارتباط محصول و برند
+* وضعیت انتشار محصول
+* وضعیت موجودی
+* فیلترهای فعال Elementor
 
 ---
 
 ## AJAX کار نمی‌کند
 
-موارد زیر را بررسی کنید:
+ابتدا Browser Console را بررسی کنید.
 
-- خطای JavaScript در Browser Console
-- خطای PHP در WordPress Debug Log
-- فعال بودن `admin-ajax.php`
-- افزونه‌های Cache یا Security که AJAX را مسدود می‌کنند
-- معتبر بودن nonce
+سپس موارد زیر را بررسی کنید:
+
+```text
+WordPress Debug Log
+Browser Console
+admin-ajax.php
+Nonce
+Caching Plugins
+Security Plugins
+Server Logs
+```
+
+برای Debug کردن WordPress می‌توان از:
+
+```php
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
+```
+
+استفاده کرد.
+
+> فعال کردن Debug در Production باید با احتیاط انجام شود و خروجی خطا نباید برای کاربران نمایش داده شود.
 
 ---
 
-# توسعه‌دهندگان
+# چگونه از پروژه شروع کنیم؟
 
-نام‌های عمومی و مستقل از سایت در کد استفاده شده‌اند تا افزونه بتواند بدون وابستگی به یک برند یا دامنه خاص توسعه داده شود.
-
-نام‌های کلیدی عمومی افزونه:
+اگر قصد دارید روی پروژه توسعه انجام دهید، مسیر پیشنهادی این است:
 
 ```text
-price_list
-price_list_load_products
-brand-price-lists
+1. Clone Repository
+        ↓
+2. Install WordPress
+        ↓
+3. Install WooCommerce
+        ↓
+4. Install Elementor
+        ↓
+5. Activate Plugin
+        ↓
+6. Test [price_list]
+        ↓
+7. Test Elementor Widget
+        ↓
+8. Inspect AJAX
+        ↓
+9. Modify / Extend
+        ↓
+10. Test
+        ↓
+11. Commit
+        ↓
+12. Pull Request
 ```
+
+برای توسعه بهتر است یک محیط Local یا Staging داشته باشید و تغییرات را مستقیماً روی Production انجام ندهید.
 
 ---
 
-# تغییرات نسخه 3.2.0
+# Development Environment
 
-- حذف وابستگی نامی به یک سایت یا برند خاص
-- عمومی‌سازی نام‌های داخلی افزونه
-- استفاده از shortcode عمومی:
+حداقل محیط پیشنهادی:
 
 ```text
-[price_list]
+WordPress
+WooCommerce
+Elementor
+PHP 8.2+
+MySQL / MariaDB
+Git
 ```
 
-- عمومی‌سازی AJAX action:
+پیشنهاد می‌شود برای توسعه از محیط‌های Local مانند:
 
 ```text
-price_list_load_products
+Local
+Docker
+XAMPP
+MAMP
 ```
 
-- عمومی‌سازی نام‌های داخلی PHP، CSS و JavaScript
-- عمومی‌سازی نام دسته Elementor
-- تکمیل مستندات نصب و استفاده
-- مستندسازی معماری Elementor
-- مستندسازی AJAX و Lazy Loading
-- مستندسازی تنظیمات Responsive و Typography
+یا هر محیط استاندارد WordPress Development استفاده شود.
+
+---
+
+# اهداف آینده
+
+پروژه در آینده می‌تواند در چند مسیر توسعه پیدا کند:
+
+### Performance
+
+* بهینه‌سازی Queryهای بزرگ
+* Object Cache Integration
+* بهینه‌سازی AJAX
+* کاهش DOM
+* بهبود Lazy Loading
+* بررسی REST API به‌عنوان گزینه جایگزین AJAX
+
+### UI
+
+* Layoutهای بیشتر
+* Table Presetهای بیشتر
+* Mobile-first Layout
+* Card Layout
+* Comparison Layout
+* Price-focused Layout
+
+### Elementor
+
+* Controlهای بیشتر
+* Presetهای آماده
+* Templateهای Layout
+* کنترل‌های پیشرفته‌تر Responsive
+
+### Developer Experience
+
+* Hookهای عمومی برای توسعه‌دهندگان
+* Filterهای بیشتر
+* مستندات API
+* Unit Tests
+* Integration Tests
+* Coding Standards
+* CI/CD
 
 ---
 
 # Roadmap
 
-## Phase 3 — Elementor Integration
+## Phase 1 — Core
 
-- [x] Elementor Widget
-- [x] انتخاب همه برندها
-- [x] انتخاب یک برند
-- [x] انتخاب چند برند
-- [x] کنترل ستون‌ها در سطح Widget
-- [x] کنترل نسبت عرض برند و محصولات
-- [x] چیدمان Zigzag
-- [x] Lazy AJAX Loading
-- [x] Elementor Typography Controls
-- [x] Responsive Controls
-- [x] فیلتر محصولات
-- [x] Hover Controls
+* [x] WooCommerce Integration
+* [x] Brand Taxonomy
+* [x] Product Query
+* [x] Shortcode
+* [x] AJAX Loading
+* [x] Cache
 
-## Phase 4 — Multiple Layout Presets
+## Phase 2 — Price List UI
 
-در نسخه‌های آینده می‌توان Layout Presetهای بیشتری اضافه کرد، از جمله:
+* [x] Product Columns
+* [x] Product Filters
+* [x] Sorting
+* [x] Table Layout
+* [x] Compact Layout
+* [x] Stacked Layout
+* [x] Zigzag Layout
 
-- جدول کلاسیک
-- کارت‌های مدرن
-- لیست فشرده
-- نمایش محصولات با تصویر بزرگ
-- نمایش موبایل‌محور
-- حالت قیمت‌محور
-- حالت مقایسه‌ای
+## Phase 3 — Elementor
 
-Presetها باید به‌صورت کنترل‌های Elementor قابل انتخاب باشند و با تنظیمات فعلی Widget سازگار بمانند.
+* [x] Elementor Widget
+* [x] Brand Selection
+* [x] Multiple Brand Selection
+* [x] Typography Controls
+* [x] Responsive Controls
+* [x] Hover Controls
+* [x] Layout Controls
+
+## Phase 4 — Future Development
+
+* [ ] Layout Presets
+* [ ] Advanced Cache Layer
+* [ ] Automated Tests
+* [ ] Developer Hooks Documentation
+* [ ] CI/CD
+* [ ] Additional Data Sources
+* [ ] Advanced Mobile Layouts
 
 ---
 
-# توسعه و GitHub
+# Changelog
 
-سازنده فعلی پروژه:
+## 3.2.0
 
-**hessamzm**
+* عمومی‌سازی کامل پروژه
+* حذف وابستگی نامی به سایت یا برند خاص
+* معرفی Shortcode عمومی:
 
-GitHub:
+```text
+[price_list]
+```
+
+* معرفی AJAX Action عمومی:
+
+```text
+price_list_load_products
+```
+
+* عمومی‌سازی نام‌های داخلی PHP
+* عمومی‌سازی CSS و JavaScript
+* عمومی‌سازی Elementor Integration
+* بازنویسی مستندات پروژه
+* مستندسازی معماری افزونه
+* مستندسازی فرآیند توسعه
+
+---
+
+# مشارکت در پروژه
+
+Pull Request و Issue برای توسعه پروژه استقبال می‌شود.
+
+پیشنهاد می‌شود قبل از ارسال Pull Request:
+
+1. تغییرات خود را در محیط Development تست کنید.
+2. عملکرد Shortcode را بررسی کنید.
+3. Elementor Widget را بررسی کنید.
+4. AJAX را تست کنید.
+5. عملکرد Responsive را بررسی کنید.
+6. تغییرات را به‌صورت واضح Commit کنید.
+7. توضیح مناسبی برای Pull Request ارائه دهید.
+
+برای تغییرات بزرگ، بهتر است ابتدا یک Issue ایجاد شود تا درباره معماری و روش پیاده‌سازی آن تصمیم‌گیری شود.
+
+---
+
+# Repository
+
+Repository پروژه:
 
 ```text
 https://github.com/hessamzm
@@ -599,13 +1052,31 @@ https://github.com/hessamzm
 
 # License
 
-لایسنس نهایی پروژه باید مطابق تصمیم صاحب پروژه در نسخه انتشار تعیین شود.
+لایسنس پروژه باید متناسب با تصمیم صاحب پروژه در Repository تعیین شود.
 
-در صورت انتشار عمومی در GitHub، پیشنهاد می‌شود فایل `LICENSE` نیز در ریشه افزونه قرار گیرد و نوع لایسنس در این بخش به‌صورت صریح ذکر شود.
+در صورت انتشار Open Source، پیشنهاد می‌شود فایل زیر در ریشه پروژه قرار گیرد:
+
+```text
+LICENSE
+```
+
+و نوع License به‌صورت صریح در همین README مشخص شود.
 
 ---
 
-# خلاصه استفاده سریع
+# Quick Start
+
+### نصب
+
+```text
+WordPress
+   ↓
+WooCommerce
+   ↓
+Brand Price Lists AJAX
+   ↓
+Activate
+```
 
 ### Shortcode
 
@@ -622,7 +1093,9 @@ https://github.com/hessamzm
 ### Elementor
 
 ```text
-Elementor → Brand Price List
+Elementor
+   ↓
+Brand Price List
 ```
 
 ### AJAX
@@ -639,8 +1112,21 @@ product_brand
 
 ---
 
-## وضعیت نسخه
+# وضعیت پروژه
 
-**Brand Price Lists AJAX — 3.2.0**
+**Brand Price Lists AJAX — v3.2.0**
 
-این README برای نسخه عمومی افزونه تهیه شده و در آن نام یا وابستگی اختصاصی به فروشگاه، دامنه یا برند خاصی در نظر گرفته نشده است.
+یک افزونه عمومی برای WordPress و WooCommerce با تمرکز بر:
+
+```text
+Performance
+AJAX
+Lazy Loading
+Brand-based Product Lists
+WooCommerce
+Elementor
+Responsive UI
+Extensibility
+```
+
+ساختار پروژه به‌گونه‌ای طراحی شده است که بتوان قابلیت‌های جدید، Layoutهای بیشتر، فیلترهای پیشرفته‌تر و Integrationهای جدید را بدون وابستگی به یک سایت یا کسب‌وکار خاص به آن اضافه کرد.
